@@ -50,7 +50,7 @@ public class WebDriverSettings {
         }
 
         driver.manage().window().setSize(new Dimension(1920,1080));
-
+        getSessionId();
       /*  System.setProperty("webdriver.chrome.driver", "c:\\Program Files\\WebBrowserDrivers\\chromedriver.exe");
 
         driver = new ChromeDriver();
@@ -129,7 +129,7 @@ public class WebDriverSettings {
 
     @AfterTest
     public void endUp() {
-        
+
         attachAllureVideo(getSessionId());
         driver.quit();
 
