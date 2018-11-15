@@ -76,7 +76,7 @@ public class WebDriverSettings {
     public void endUp() throws InterruptedException {
 
         String sessionNumber = getSessionId();
-
+        saveScreenshotPNG(driver);
         driver.quit();
         Thread.sleep(2000);
 
