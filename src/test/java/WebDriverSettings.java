@@ -73,13 +73,10 @@ public class WebDriverSettings {
 
 
     @AfterTest
-    public void endUp() throws MalformedURLException, InterruptedException {
+    public void endUp() throws InterruptedException {
 
-       /* String selenoidUrl = "http://192.168.1.201:4444";
-        URL videoUrl = new URL( selenoidUrl + "/video/" + sessionId + ".mp4");
-        System.out.println(videoUrl);*/
         String sessionNumber = getSessionId();
-        saveScreenshotPNG(driver);
+
         driver.quit();
         Thread.sleep(2000);
 
@@ -92,6 +89,7 @@ public class WebDriverSettings {
             URL videoUrl = new URL( selenoidUrl + "/video/" + sessionId + ".mp4");
             InputStream is = getSelenoidVideo(videoUrl);
             Allure.addAttachment("Video", "video/mp4", is, "mp4");
+            deleteSelenoidVideo(videoUrl);
         } catch (Exception e) {
             System.out.println("attachAllureVideo");
             e.printStackTrace();
@@ -127,6 +125,20 @@ public class WebDriverSettings {
         }
 
         return null;
+    }
+
+    public static void deleteSelenoidVideo(URL url) {
+        try {
+            HttpURLConnection deleteConn = (HttpURLConnection) url.openConnection();
+            deleteConn.setDoOutput(true);
+            deleteConn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+            deleteConn.setRequestMethod("DELETE");
+            deleteConn.connect();
+            deleteConn.disconnect();
+        } catch (IOException e) {
+            System.out.println("deleteSelenoidVideo");
+            e.printStackTrace();
+        }
     }
 
     @Attachment(value = "Page screenshot", type = "image/png")
