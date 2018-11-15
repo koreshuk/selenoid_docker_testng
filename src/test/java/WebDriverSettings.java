@@ -130,7 +130,7 @@ public class WebDriverSettings {
     @AfterTest
     public void endUp() {
 
-        attachAllureVideo(getSessionId());
+        
         driver.quit();
 
     }
