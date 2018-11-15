@@ -129,7 +129,9 @@ public class WebDriverSettings {
 
     @AfterTest
     public void endUp() {
+        String sessionId = getSessionId();
         saveScreenshotPNG(driver);
+        attachAllureVideo(sessionId);
 
         driver.quit();
 
