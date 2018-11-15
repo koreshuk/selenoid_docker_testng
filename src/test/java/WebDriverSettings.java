@@ -13,6 +13,7 @@ import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -71,11 +72,10 @@ public class WebDriverSettings {
 
     @AfterTest
     public void endUp() throws MalformedURLException {
-        String sessionId = getSessionId();
-        System.out.println(sessionId);
-        String selenoidUrl = "http://192.168.1.201:4444";
+        attachAllureVideo(getSessionId());
+       /* String selenoidUrl = "http://192.168.1.201:4444";
         URL videoUrl = new URL( selenoidUrl + "/video/" + sessionId + ".mp4");
-        System.out.println(videoUrl);
+        System.out.println(videoUrl);*/
         saveScreenshotPNG(driver);
         driver.quit();
 
@@ -86,9 +86,42 @@ public class WebDriverSettings {
         return ((TakesScreenshot)driver).getScreenshotAs(OutputType.BYTES);
     }
 
+    private static String selenoidUrl = "http://192.168.1.201:4444";
+    public void attachAllureVideo(String sessionId) {
+        try {
+            URL videoUrl = new URL(selenoidUrl + "/video/" + sessionId + ".mp4");
+            InputStream is = null;
+            Thread.sleep(1000);
+            for (int i = 0; i < 10; i++) {
+                try {
+                    is = videoUrl.openStream();
+                    i = 10;
+                } catch (FileNotFoundException e) {
+                    Thread.sleep(1000);
+                }
+            }
+            Allure.addAttachment("Video", "video/mp4", is, "mp4");
+        } catch (Exception e) {
+            System.out.println("attachAllureVideo");
+            e.printStackTrace();
+        }
+    }
+ /* public void attachAllureVideo(String sessionId) {
 
+        try {
+            String selenoidUrl = "http://192.168.1.201:4444";
+            URL videoUrl = new URL( selenoidUrl + "/video/" + sessionId + ".mp4");
 
-    public static InputStream getSelenoidVideo(URL url) {
+            InputStream is = getSelenoidVideo(videoUrl);
+            Allure.addAttachment("Video", "video/mp4", is, "mp4");
+
+        } catch (Exception e) {
+            System.out.println("attachAllureVideo");
+            e.printStackTrace();
+        }
+    } */
+
+    public  InputStream getSelenoidVideo(URL url) {
         int lastSize = 0;
         for (int i = 0; i < 20; i++) {
             try {
@@ -121,34 +154,8 @@ public class WebDriverSettings {
         return ((RemoteWebDriver) getWebDriver()).getSessionId().toString();
     }*/
 
-    public static void deleteSelenoidVideo(URL url) {
-        try {
-            HttpURLConnection deleteConn = (HttpURLConnection) url.openConnection();
-            deleteConn.setDoOutput(true);
-            deleteConn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-            deleteConn.setRequestMethod("DELETE");
-            deleteConn.connect();
-            deleteConn.disconnect();
-        } catch (IOException e) {
-            System.out.println("deleteSelenoidVideo");
-            e.printStackTrace();
-        }
-    }
 
-    @Attachment(value = "VIDEO", type = "video/mp4")
-    public void attachAllureVideo(String sessionId) {
 
-        try {
-            String selenoidUrl = "http://192.168.1.201:4444";
-            URL videoUrl = new URL( selenoidUrl + "/video/" + sessionId + ".mp4");
 
-            InputStream is = getSelenoidVideo(videoUrl);
-            Allure.addAttachment("Video", "video/mp4", is, "mp4");
-            //deleteSelenoidVideo(videoUrl);
-        } catch (Exception e) {
-            System.out.println("attachAllureVideo");
-            e.printStackTrace();
-        }
-    }
 
 }
