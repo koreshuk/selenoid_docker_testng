@@ -32,7 +32,7 @@ public class WebDriverSettings {
         capabilities.setVersion("70.0");
         capabilities.setCapability("enableVNC", true);
         capabilities.setCapability("enableVideo", true);
-        capabilities.setCapability("videoName","primerVideoSelenoid_1920x1080");
+        //capabilities.setCapability("videoName","primerVideoSelenoid_1920x1080");
         capabilities.setCapability("screenResolution", "1920x1080");
 
 
