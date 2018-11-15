@@ -3,7 +3,7 @@
 <suite name="Paralel tests" parallel="tests" thread-count="4" verbose="10">
     <test name="Chrome 69.0">
         <classes>
-           
+
             <class name="SecondTest" />
         </classes>
     </test>

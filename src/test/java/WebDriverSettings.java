@@ -14,13 +14,13 @@ import java.net.URI;
 import java.security.PublicKey;
 
 public class WebDriverSettings {
-   // public WebDriver driver;
-    public ChromeDriver driver;
+    public WebDriver driver;
+    //public ChromeDriver driver;
 
 
     @BeforeTest
     public void setUp() throws MalformedURLException {
-/*
+
         OperaOptions operaOptions = new OperaOptions();
         operaOptions.setBinary("/usr/bin/opera");
 
@@ -41,14 +41,15 @@ public class WebDriverSettings {
             Thread.currentThread().interrupt();
         }
 
-        driver.manage().window().setSize(new Dimension(1920,1080)); */
-        System.setProperty("webdriver.chrome.driver", "c:\\Program Files\\WebBrowserDrivers\\chromedriver.exe");
+        driver.manage().window().setSize(new Dimension(1920,1080));
+
+      /*  System.setProperty("webdriver.chrome.driver", "c:\\Program Files\\WebBrowserDrivers\\chromedriver.exe");
 
         driver = new ChromeDriver();
         driver.manage().window().setSize(new Dimension(1600, 1200));
         Dimension size = driver.manage().window().getSize();
         driver.manage().window().maximize();
-        System.out.println("из блока бефортест "+size);
+        System.out.println("из блока бефортест "+size);*/
     }
 
     @AfterTest
