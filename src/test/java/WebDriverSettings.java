@@ -1,3 +1,4 @@
+import com.google.common.io.Files;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Attachment;
 import org.openqa.selenium.Dimension;
@@ -11,6 +12,7 @@ import org.openqa.selenium.remote.SessionId;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -23,7 +25,7 @@ import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 public class WebDriverSettings {
     public WebDriver driver;
     //public ChromeDriver driver;
-   String selenoidUrl = "http://192.168.1.201:4444/wd/hub/";
+   String selenoidUrlWdHub = "http://192.168.1.201:4444/wd/hub/";
 
     @BeforeTest
     public void setUp() throws MalformedURLException {
@@ -43,7 +45,7 @@ public class WebDriverSettings {
 
 
          driver = new RemoteWebDriver(
-                URI.create(selenoidUrl).toURL(), capabilities);
+                URI.create(selenoidUrlWdHub).toURL(), capabilities);
         try {
             Thread.sleep(1500);                 //1500 milliseconds
         } catch (InterruptedException ex) {
@@ -51,11 +53,6 @@ public class WebDriverSettings {
         }
 
         driver.manage().window().setSize(new Dimension(1920,1080));
-        System.out.println("video.enabled: " + capabilities.getCapability("enableVideo"));
-
-
-
-
         /**
          * локальный хромдрайвер
          */
@@ -66,6 +63,21 @@ public class WebDriverSettings {
         Dimension size = driver.manage().window().getSize();
         driver.manage().window().maximize();
         System.out.println("из блока бефортест "+size);*/
+
+    }
+
+
+
+
+    @AfterTest
+    public void endUp() throws MalformedURLException {
+        String sessionId = getSessionId();
+        System.out.println(sessionId);
+        String selenoidUrl = "http://192.168.1.201:4444";
+        URL videoUrl = new URL( selenoidUrl + "/video/" + sessionId + ".mp4");
+        System.out.println(videoUrl);
+        saveScreenshotPNG(driver);
+        driver.quit();
 
     }
 
@@ -98,12 +110,16 @@ public class WebDriverSettings {
         return null;
     }
 
-    public String getSessionId(){
+    public  String getSessionId(){
         SessionId session = ((RemoteWebDriver)driver).getSessionId();
-        String sessionId = session.toString();
-        return sessionId;
+        String sessionIdGet = session.toString();
+        return sessionIdGet;
     }
 
+   /* public static String getSessionId() {
+
+        return ((RemoteWebDriver) getWebDriver()).getSessionId().toString();
+    }*/
 
     public static void deleteSelenoidVideo(URL url) {
         try {
@@ -119,29 +135,20 @@ public class WebDriverSettings {
         }
     }
 
+    @Attachment(value = "VIDEO", type = "video/mp4")
     public void attachAllureVideo(String sessionId) {
 
         try {
-            String urlSelenoidVideo = "http://192.168.1.201:4444";
-            URL videoUrl = new URL( urlSelenoidVideo + "/video/" + sessionId + ".mp4");
+            String selenoidUrl = "http://192.168.1.201:4444";
+            URL videoUrl = new URL( selenoidUrl + "/video/" + sessionId + ".mp4");
 
             InputStream is = getSelenoidVideo(videoUrl);
             Allure.addAttachment("Video", "video/mp4", is, "mp4");
-            deleteSelenoidVideo(videoUrl);
+            //deleteSelenoidVideo(videoUrl);
         } catch (Exception e) {
             System.out.println("attachAllureVideo");
             e.printStackTrace();
         }
     }
 
-
-    @AfterTest
-    public void endUp() {
-        attachAllureVideo(getSessionId());
-        saveScreenshotPNG(driver);
-
-
-        driver.quit();
-
-    }
 }
