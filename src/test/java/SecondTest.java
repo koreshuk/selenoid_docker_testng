@@ -6,5 +6,6 @@ public class SecondTest extends WebDriverSettings{
     public void selenoidFirst() throws Exception {
         driver.get("http://www.yahoo.by");
 
+
     }
 }
