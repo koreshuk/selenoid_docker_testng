@@ -3,15 +3,12 @@
 <suite name="Paralel tests" parallel="tests" thread-count="4" verbose="10">
     <test name="Chrome 69.0">
         <classes>
-
             <class name="SecondTest" />
-            <class name ="JsoupTest" />
         </classes>
     </test>
     <test name="Chrome 70.0">
         <classes>
             <class name ="JsoupTest" />
-
         </classes>
     </test>
 

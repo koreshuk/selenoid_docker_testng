@@ -89,6 +89,7 @@ public class JsoupTest extends WebDriverSettings{
     public void selenoidFirst() throws Exception {
       driver.get("http://www.onliner.by");
       driver.get("http://www.youtube.com");
+
     }
 
 
