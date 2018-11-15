@@ -6,11 +6,7 @@
             <class name="SecondTest" />
         </classes>
     </test>
-    <test name="Chrome 70.0">
-        <classes>
-            <class name ="JsoupTest" />
-        </classes>
-    </test>
+  
 
 
 </suite>
