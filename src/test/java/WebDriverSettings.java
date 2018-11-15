@@ -55,7 +55,7 @@ public class WebDriverSettings {
         }
 
         driver.manage().window().setSize(new Dimension(1920,1080));
-        System.out.println(selenoidUrl+"/video/"+getSessionId()+".mp4");
+
         /**
          * локальный хромдрайвер
          */
