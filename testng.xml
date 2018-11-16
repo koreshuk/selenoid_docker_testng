@@ -13,11 +13,11 @@
 
         </classes>
     </test>
- <!--    <test name="firefox">
+     <test name="firefox">
         <parameter name="browser" value="firefox"/>
         <parameter name="version" value="63.0"/>
         <classes>
             <class name="JsoupTest" />
         </classes>
-    </test> -->
+    </test> 
 </suite>
