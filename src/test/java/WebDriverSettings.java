@@ -77,12 +77,12 @@ public class WebDriverSettings {
     @AfterClass
     public void endUp() throws InterruptedException {
 
-        //String sessionNumber = getSessionId();
-        //saveScreenshotPNG(driver);
+        String sessionNumber = getSessionId();
+        saveScreenshotPNG(driver);
         driver.quit();
-       // Thread.sleep(2000);
+       Thread.sleep(2000);
 
-        //attachAllureVideo(sessionNumber);
+        attachAllureVideo(sessionNumber);
 
     }
 
