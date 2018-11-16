@@ -1,3 +1,4 @@
+import com.codeborne.selenide.WebDriverRunner;
 import com.google.common.io.Files;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Attachment;
@@ -10,8 +11,7 @@ import org.openqa.selenium.opera.OperaOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.remote.SessionId;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeTest;
+import org.testng.annotations.*;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -29,8 +29,10 @@ public class WebDriverSettings {
     //public ChromeDriver driver;
     String selenoidUrlWdHub = "http://192.168.1.201:4444/wd/hub/";
     String selenoidUrl = "http://192.168.1.201:4444";
-    @BeforeTest
-    public void setUp() throws MalformedURLException {
+
+    @BeforeClass
+    @Parameters(value={"browser","version"})
+    public void setUp(String browser, String version) throws MalformedURLException {
         /**
          * ремоут на удаленный хост с Linux-mint и развернутым Docker
          */
@@ -38,21 +40,23 @@ public class WebDriverSettings {
         operaOptions.setBinary("/usr/bin/opera");
 
         DesiredCapabilities capabilities = new DesiredCapabilities(operaOptions);
-        capabilities.setBrowserName("firefox");
-        capabilities.setVersion("63.0");
+        capabilities.setBrowserName(browser);
+        capabilities.setVersion(version);
         capabilities.setCapability("enableVNC", true);
         capabilities.setCapability("enableVideo", true);
-        //capabilities.setCapability("videoName","primerVideoSelenoid_1920x1080");
+       // capabilities.setCapability("videoName",browser+"_"+version);
         capabilities.setCapability("screenResolution", "1920x1080");
+            try {
+                driver = new RemoteWebDriver(URI.create(selenoidUrlWdHub).toURL(), capabilities);
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
 
-
-         driver = new RemoteWebDriver(
-                URI.create(selenoidUrlWdHub).toURL(), capabilities);
-        try {
-            Thread.sleep(1500);                 //1500 milliseconds
-        } catch (InterruptedException ex) {
-            Thread.currentThread().interrupt();
-        }
+            try {
+                Thread.sleep(1500);                 //1500 milliseconds
+            } catch (InterruptedException ex) {
+                Thread.currentThread().interrupt();
+            }
 
         driver.manage().window().setSize(new Dimension(1920,1080));
 
@@ -70,17 +74,15 @@ public class WebDriverSettings {
     }
 
 
-
-
-    @AfterTest
+    @AfterClass
     public void endUp() throws InterruptedException {
 
-        String sessionNumber = getSessionId();
-        saveScreenshotPNG(driver);
+        //String sessionNumber = getSessionId();
+        //saveScreenshotPNG(driver);
         driver.quit();
-        Thread.sleep(2000);
+       // Thread.sleep(2000);
 
-        attachAllureVideo(sessionNumber);
+        //attachAllureVideo(sessionNumber);
 
     }
 
@@ -110,8 +112,8 @@ public class WebDriverSettings {
         for (int i = 0; i < 20; i++) {
             try {
                 int size = url.openConnection().getContentLength();
-                System.out.println("Content-Length: " + size);
-                System.out.println(i);
+               // System.out.println("Content-Length: " + size);
+                //System.out.println(i);
                 if (size > lastSize || size == 19) {
                     lastSize = size;
                     Thread.sleep(1000);
