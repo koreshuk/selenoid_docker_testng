@@ -81,6 +81,12 @@
         <artifactId>slf4j-simple</artifactId>
         <version>1.7.21</version>
     </dependency>
+        <!-- https://mvnrepository.com/artifact/com.codeborne/selenide -->
+        <dependency>
+            <groupId>com.codeborne</groupId>
+            <artifactId>selenide</artifactId>
+            <version>5.0.0</version>
+        </dependency>
 
 </dependencies>
     <build>

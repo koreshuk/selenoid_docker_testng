@@ -1,3 +1,4 @@
+import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.WebDriverRunner;
 import com.google.common.io.Files;
 import io.qameta.allure.Allure;
@@ -7,6 +8,7 @@ import org.openqa.selenium.Dimension;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.opera.OperaOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -33,6 +35,35 @@ public class WebDriverSettings {
     @BeforeClass
     @Parameters(value={"browser","version"})
     public void setUp(String browser, String version) throws MalformedURLException {
+        WebDriverRunner.setWebDriver(driverSetUp(browser,version));
+
+        /**
+         * локальный хромдрайвер
+         */
+          System.setProperty("webdriver.chrome.driver", "c:\\Program Files\\WebBrowserDrivers\\chromedriver.exe");
+/*
+        driver = new ChromeDriver();
+        driver.manage().window().setSize(new Dimension(1600, 1200));
+        Dimension size = driver.manage().window().getSize();
+        driver.manage().window().maximize();
+        System.out.println("из блока бефортест "+size);
+ */
+    }
+
+
+    @AfterClass
+    public void endUp() throws InterruptedException {
+
+        String sessionNumber = getSessionId();
+        saveScreenshotPNG(driver);
+        driver.quit();
+        Thread.sleep(2000);
+
+        attachAllureVideo(sessionNumber);
+
+    }
+
+    public WebDriver driverSetUp(String browser, String version) throws MalformedURLException {
         /**
          * ремоут на удаленный хост с Linux-mint и развернутым Docker
          */
@@ -44,7 +75,7 @@ public class WebDriverSettings {
         capabilities.setVersion(version);
         capabilities.setCapability("enableVNC", true);
         capabilities.setCapability("enableVideo", true);
-       // capabilities.setCapability("videoName",browser+"_"+version);
+        // capabilities.setCapability("videoName",browser+"_"+version);
         capabilities.setCapability("screenResolution", "1920x1080");
             try {
                 driver = new RemoteWebDriver(URI.create(selenoidUrlWdHub).toURL(), capabilities);
@@ -57,36 +88,11 @@ public class WebDriverSettings {
             } catch (InterruptedException ex) {
                 Thread.currentThread().interrupt();
             }
-
-        driver.manage().window().setSize(new Dimension(1920,1080));
-
-        /**
-         * локальный хромдрайвер
-         */
-        /*  System.setProperty("webdriver.chrome.driver", "c:\\Program Files\\WebBrowserDrivers\\chromedriver.exe");
-
-        driver = new ChromeDriver();
-        driver.manage().window().setSize(new Dimension(1600, 1200));
-        Dimension size = driver.manage().window().getSize();
-        driver.manage().window().maximize();
-        System.out.println("из блока бефортест "+size);*/
+            return driver;
 
     }
 
-
-    @AfterClass
-    public void endUp() throws InterruptedException {
-
-        String sessionNumber = getSessionId();
-        saveScreenshotPNG(driver);
-        driver.quit();
-       Thread.sleep(2000);
-
-        attachAllureVideo(sessionNumber);
-
-    }
-
-  public void attachAllureVideo(String sessionId) {
+        public void attachAllureVideo(String sessionId) {
         try {
             URL videoUrl = new URL( selenoidUrl + "/video/" + sessionId + ".mp4");
             InputStream is = getSelenoidVideo(videoUrl);
