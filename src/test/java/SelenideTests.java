@@ -31,7 +31,7 @@ public class SelenideTests {
         //$(By.cssSelector("gmail-nav__nav-link gmail-nav__nav-link__sign-in")).click();
         $(By.id("identifierId")).setValue("andrei.kotsko").pressEnter();
         $(By.xpath("//input[@type='password']")).setValue("and123123").pressEnter();
-        $(By.xpath("//div[@jsname='YRMmle']")).shouldNotHave(text("Введите пароль"));
+        $(By.xpath("//div[@jsname='YRMmle']")).shouldHave(text("Введите пароль"));
 
         //$$(".g").shouldHave(size(8));
 
@@ -39,16 +39,16 @@ public class SelenideTests {
     }
 
 
-    @Parameters(value={"browser","version"})
+    //@Parameters(value={"browser","version"})
     public WebDriver createDriver() {
         DesiredCapabilities browser = new DesiredCapabilities();
-        browser.setBrowserName("firefox");
-        browser.setVersion("63.0");
+        browser.setBrowserName("chrome");
+        browser.setVersion("70.0");
         browser.setCapability("enableVNC", true);
         browser.setCapability("screenResolution", "1920x1080");
             try {
                 RemoteWebDriver driver = new RemoteWebDriver(
-                        URI.create("http://192.168.1.201:4444/wd/hub/").toURL(),
+                        URI.create("http://192.168.1.182:4444/wd/hub/").toURL(),
                         browser
                 );
                 driver.manage().window().setSize(new Dimension(1280, 1024));

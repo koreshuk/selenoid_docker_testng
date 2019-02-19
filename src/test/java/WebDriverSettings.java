@@ -29,8 +29,8 @@ import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 public class WebDriverSettings {
     public WebDriver driver;
     //public ChromeDriver driver;
-    String selenoidUrlWdHub = "http://192.168.1.201:4444/wd/hub/";
-    String selenoidUrl = "http://192.168.1.201:4444";
+    String selenoidUrlWdHub = "http://192.168.1.182:4444/wd/hub/";
+    String selenoidUrl = "http://192.168.1.182:4444";
 
     @BeforeClass
     @Parameters(value={"browser","version"})
@@ -40,7 +40,7 @@ public class WebDriverSettings {
         /**
          * локальный хромдрайвер
          */
-          System.setProperty("webdriver.chrome.driver", "c:\\Program Files\\WebBrowserDrivers\\chromedriver.exe");
+         // System.setProperty("webdriver.chrome.driver", "c:\\Program Files\\WebBrowserDrivers\\chromedriver.exe");
 /*
         driver = new ChromeDriver();
         driver.manage().window().setSize(new Dimension(1600, 1200));
@@ -63,7 +63,7 @@ public class WebDriverSettings {
 
     }
 
-    public WebDriver driverSetUp(String browser, String version) throws MalformedURLException {
+    public WebDriver driverSetUp(String browser, String version)  {
         /**
          * ремоут на удаленный хост с Linux-mint и развернутым Docker
          */

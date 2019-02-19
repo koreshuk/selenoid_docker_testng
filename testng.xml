@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
-<suite name="Paralel tests" parallel="tests" thread-count="4" verbose="10">
+<suite name="Parallel tests" parallel="tests" thread-count="4" verbose="10">
     <parameter name="browser" value="chrome"/>
-    <parameter name="version" value="70.0"/>
-    <test name="Chrome 70.0">
+    <parameter name="version" value="69.0"/>
+    <test name="Chrome 69.0">
         <parameter name="browser" value="chrome"/>
-        <parameter name="version" value="70.0"/>
+        <parameter name="version" value="69.0"/>
         <classes>
 
             <class name="SecondTest" />
@@ -13,18 +13,18 @@
 
         </classes>
     </test>
-     <test name="firefox 63.0">
-        <parameter name="browser" value="firefox"/>
-        <parameter name="version" value="63.0"/>
-        <classes>
-            <class name="JsoupTest" />
-        </classes>
-    </test>
-    <test name="Opera 56.0">
-        <parameter name="browser" value="opera"/>
-        <parameter name="version" value="56.0"/>
-        <classes>
-            <class name="JsoupTest" />
-        </classes>
-    </test>
+        <test name="firefox 63.0">
+           <parameter name="browser" value="firefox"/>
+           <parameter name="version" value="63.0"/>
+           <classes>
+               <class name="JsoupTest" />
+           </classes>
+               </test>
+         <test name="Opera 56.0">
+           <parameter name="browser" value="opera"/>
+           <parameter name="version" value="56.0"/>
+           <classes>
+               <class name="JsoupTest" />
+           </classes>
+       </test>
 </suite>
