@@ -14,7 +14,6 @@ public class ServiceHooks {
     public void initializeTest(){
         WebDriverManager.chromedriver().setup();
 
-
     }
 
     @After
