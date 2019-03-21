@@ -10,6 +10,8 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
+import ru.yandex.qatools.ashot.AShot;
+import ru.yandex.qatools.ashot.shooting.ShootingStrategies;
 
 import java.net.MalformedURLException;
 import java.net.URI;
@@ -33,6 +35,7 @@ public class SelenideTests {
         $(By.xpath("//input[@type='password']")).setValue("and123123").pressEnter();
         $(By.xpath("//div[@jsname='YRMmle']")).shouldHave(text("Введите пароль"));
 
+
         //$$(".g").shouldHave(size(8));
 
         //$("#ires div.g").shouldHave(Condition.text("Selenide: concise UI tests in Java"));
@@ -48,7 +51,7 @@ public class SelenideTests {
         browser.setCapability("screenResolution", "1920x1080");
             try {
                 RemoteWebDriver driver = new RemoteWebDriver(
-                        URI.create("http://192.168.1.182:4444/wd/hub/").toURL(),
+                        URI.create("http://192.168.1.170:4444/wd/hub/").toURL(),
                         browser
                 );
                 driver.manage().window().setSize(new Dimension(1280, 1024));
