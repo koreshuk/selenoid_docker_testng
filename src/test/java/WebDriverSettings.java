@@ -29,8 +29,8 @@ import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 public class WebDriverSettings {
     public WebDriver driver;
     //public ChromeDriver driver;
-    String selenoidUrlWdHub = "http://192.168.1.170:4444/wd/hub/";
-    String selenoidUrl = "http://192.168.1.170:4444";
+    String selenoidUrlWdHub = "http://192.168.11.128:4444/wd/hub/";
+    String selenoidUrl = "http://192.168.11.128:4444";
 
     @BeforeClass
     @Parameters(value={"browser","version"})

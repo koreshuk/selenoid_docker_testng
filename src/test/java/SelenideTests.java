@@ -51,7 +51,7 @@ public class SelenideTests {
         browser.setCapability("screenResolution", "1920x1080");
             try {
                 RemoteWebDriver driver = new RemoteWebDriver(
-                        URI.create("http://192.168.1.170:4444/wd/hub/").toURL(),
+                        URI.create("http://192.168.11.128:4444/wd/hub/").toURL(),
                         browser
                 );
                 driver.manage().window().setSize(new Dimension(1280, 1024));
