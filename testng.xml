@@ -7,10 +7,7 @@
         <parameter name="browser" value="chrome"/>
         <parameter name="version" value="69.0"/>
         <classes>
-
             <class name="SecondTest" />
-            <class name="JsoupTest" />
-
         </classes>
     </test>
         <test name="firefox 63.0">
