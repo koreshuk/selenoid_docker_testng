@@ -3,23 +3,23 @@
 <suite name="Parallel tests" parallel="tests" thread-count="4" verbose="10">
     <parameter name="browser" value="chrome"/>
     <parameter name="version" value="69.0"/>
-    <test name="Chrome 69.0">
+    <test name="Chrome 73.0">
         <parameter name="browser" value="chrome"/>
-        <parameter name="version" value="69.0"/>
+        <parameter name="version" value="73.0"/>
         <classes>
             <class name="SecondTest" />
         </classes>
     </test>
-        <test name="firefox 63.0">
+        <test name="firefox 66.0">
            <parameter name="browser" value="firefox"/>
-           <parameter name="version" value="63.0"/>
+           <parameter name="version" value="66.0"/>
            <classes>
                <class name="JsoupTest" />
            </classes>
                </test>
-         <test name="Opera 56.0">
+         <test name="Opera 58.0">
            <parameter name="browser" value="opera"/>
-           <parameter name="version" value="56.0"/>
+           <parameter name="version" value="58.0"/>
            <classes>
                <class name="JsoupTest" />
            </classes>

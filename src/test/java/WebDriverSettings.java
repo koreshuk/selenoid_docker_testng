@@ -23,6 +23,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
+import java.util.concurrent.TimeUnit;
 
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 
@@ -36,7 +37,7 @@ public class WebDriverSettings {
     @Parameters(value={"browser","version"})
     public void setUp(String browser, String version) throws MalformedURLException {
         WebDriverRunner.setWebDriver(driverSetUp(browser,version));
-
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         /**
          * локальный хромдрайвер
          */
