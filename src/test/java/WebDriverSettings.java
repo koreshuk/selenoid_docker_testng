@@ -64,6 +64,18 @@ public class WebDriverSettings {
 
     }
 
+    public void attachAllureVideo(String sessionId) {
+        try {
+            URL videoUrl = new URL( selenoidUrl + "/video/" + sessionId + ".mp4");
+            InputStream is = getSelenoidVideo(videoUrl);
+            Allure.addAttachment("Video", "video/mp4", is, "mp4");
+            deleteSelenoidVideo(videoUrl);
+        } catch (Exception e) {
+            System.out.println("attachAllureVideo");
+            e.printStackTrace();
+        }
+    }
+
     public WebDriver driverSetUp(String browser, String version)  {
         /**
          * ремоут на удаленный хост с Linux-mint и развернутым Docker
@@ -93,17 +105,7 @@ public class WebDriverSettings {
 
     }
 
-        public void attachAllureVideo(String sessionId) {
-        try {
-            URL videoUrl = new URL( selenoidUrl + "/video/" + sessionId + ".mp4");
-            InputStream is = getSelenoidVideo(videoUrl);
-            Allure.addAttachment("Video", "video/mp4", is, "mp4");
-            deleteSelenoidVideo(videoUrl);
-        } catch (Exception e) {
-            System.out.println("attachAllureVideo");
-            e.printStackTrace();
-        }
-    }
+
 
  public String getSessionId(){
      SessionId session = ((RemoteWebDriver)driver).getSessionId();

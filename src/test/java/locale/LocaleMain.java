@@ -1,6 +1,8 @@
 package locale;
 
 import javafx.scene.input.DataFormat;
+import org.testng.annotations.Test;
+
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.text.DateFormat;
@@ -11,7 +13,10 @@ import java.util.Date;
 import java.util.Locale;
 
 public class LocaleMain {
-    public static void main(String[] args){
+
+
+    @Test
+    public void locales(){
         Locale locale = new Locale("ru","RU");
         Locale locale1 = Locale.getDefault();
         Locale locale2 = new Locale("de", "DE");
@@ -42,6 +47,21 @@ public class LocaleMain {
             System.out.println(loc);
         } */
 
+    }
+
+
+    @Test
+
+    public void verno(){
+          String driverUrl = "jdbc:sqlserver://";
+         String serverName = "mbs-db";
+        //private static String instanceName="WALLET";
+         String portNumber = "1435";
+         String databaseName = "lfsbaku";
+         String userName = "USER4MBS";
+         String password = "LFS.BERLIN.2012";
+            //return driverUrl + serverName + ";instanceName=" + instanceName + ";databaseName=" + databaseName;
+        System.out.println(driverUrl + serverName + ":" + portNumber + ";databaseName=" + databaseName);
 
     }
 }
